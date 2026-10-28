@@ -1,25 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MC Launcher</string>
-    <string name="nav_home">Home</string>
-    <string name="nav_versions">Versions</string>
-    <string name="nav_instances">Instances</string>
-    <string name="nav_mods">Mods</string>
-    <string name="nav_settings">Settings</string>
-    <string name="create_instance">Create instance</string>
-    <string name="instance_name">Instance name</string>
-    <string name="select_version">Select version</string>
-    <string name="launch">Launch</string>
-    <string name="install">Install</string>
-    <string name="delete">Delete</string>
-    <string name="backups">Backups</string>
-    <string name="logs">Logs</string>
-    <string name="resource_packs">Resource packs</string>
-    <string name="mod_loader">Mod loader</string>
-    <string name="loader_none">None (vanilla)</string>
-    <string name="loader_fabric">Fabric</string>
-    <string name="loader_forge">Forge</string>
-    <string name="loader_quilt">Quilt</string>
-    <string name="settings">Settings</string>
-    <string name="about">About</string>
-    <string name="about_text">MC Launcher — a Minecraft Java Edition launcher manager for Android.\n\nDownloads versions, libraries, assets, mods and resource packs into isolated instances and assembles the Java launch command.\n\nImportant: Minecraft Java Edition native libraries (LWJGL/OpenAL) are built for desktop (Windows/Linux/macOS x86/x64), and Android uses ART rather than a standard JVM. Running the game on Android additionally requires a JVM port plus Android-native LWJGL (the approach used by the open-source PojavLauncher). This app manages instances and assembles the launch command; actually executing the game requires that JVM/LWJGL port, which is documented in README.md.</string>
+    <string name="app_name">Kokylaucher</string>
+    <string name="add_account">Přidat účet</string>
+    <string name="microsoft_account">MICROSOFT ACCOUNT</string>
+    <string name="elyby_account">ELY.BY ACCOUNT</string>
+    <string name="local_account">LOCAL ACCOUNT</string>
+    <string name="username_hint">Uživatelské jméno</string>
+    <string name="login_button">PŘIHLÁSIT SE</string>
+    <string name="vanilla_launcher">Vanilla Launcher</string>
+    <string name="mod_launcher">Mod Launcher</string>
+    <string name="play">HRÁT</string>
+    <string name="custom_controls">VLASTNÍ OVLÁDACÍ PRVKY</string>
+    <string name="run_jar">SPUSTIT .JAR</string>
+    <string name="share_log">SDÍLET ZÁZNAM PROTOKOLU</string>
+    <string name="open_game_folder">OTEVŘÍT SLOŽKU HRY</string>
+    <string name="powered_by">POWERED BY KOKYOS</string>
+    <string name="choose_launcher">Zvolte typ spouštěče</string>
+    <string name="play_not_available">Hraní není dostupné</string>
+    <string name="play_explanation">Minecraft: Java Edition nelze na Androidu spustit nativně. Nativní knihovny hry (LWJGL, OpenAL) jsou sestaveny pro desktop (Windows/Linux/macOS x86/x64) a Android používá ART místo standardní JVM. Pro spuštění hry je nutná JVM port a Android-native LWJGL (např. PojavLauncher). Tato aplikace spravuje instance a sestavuje příkaz ke spuštění.</string>
 </resources>

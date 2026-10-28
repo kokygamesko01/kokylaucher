@@ -1,22 +1,11 @@
 <resources>
-    <color name="mc_primary">#FF6366F1</color>
-    <color name="mc_primary_container">#FFE0E7FF</color>
-    <color name="mc_on_primary">#FFFFFFFF</color>
-    <color name="mc_on_primary_container">#FF1E1B4B</color>
-    <color name="mc_secondary">#FF0EA5E9</color>
-    <color name="mc_secondary_container">#FFE0F2FE</color>
-    <color name="mc_on_secondary">#FFFFFFFF</color>
-    <color name="mc_on_secondary_container">#FF004A7A</color>
-    <color name="mc_tertiary">#FF10B981</color>
-    <color name="mc_surface">#FFFFFFFF</color>
-    <color name="mc_surface_container_highest">#FFF1F5F9</color>
-    <color name="mc_background">#FFFFFFFF</color>
-    <color name="mc_on_background">#FF0F172A</color>
-    <color name="mc_error">#FFEF4444</color>
-    <color name="mc_on_error">#FFFFFFFF</color>
-    <color name="mc_outline">#FFCBD5E1</color>
-    <color name="mc_surface_tint">#FF6366F1</color>
-    <color name="mc_inverse_surface">#FF334155</color>
-    <color name="mc_inverse_on_surface">#FFF8FAFC</color>
-    <color name="mc_inverse_primary">#FF818CF8</color>
+    <color name="koky_background">#FF0A0A0A</color>
+    <color name="koky_surface">#FF1A1A1A</color>
+    <color name="koky_surface_elevated">#FF2A2A2A</color>
+    <color name="koky_button">#FF2AA8E0</color>
+    <color name="koky_button_pressed">#FF1E8BC4</color>
+    <color name="koky_text_primary">#FFFFFFFF</color>
+    <color name="koky_text_secondary">#FFB0B0B0</color>
+    <color name="koky_divider">#FF333333</color>
+    <color name="koky_accent">#FF0EA5E9</color>
 </resources>

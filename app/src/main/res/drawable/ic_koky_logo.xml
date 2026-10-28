@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="128dp"
+    android:height="128dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <!-- Outer circle -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="6"
+        android:pathData="M100,100m-90,0a90,90 0,1 1,180 0a90,90 0,1 1,-180 0"/>
+    <!-- Crown -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M85,85 L92,75 L100,85 L108,75 L115,85 L115,105 L85,105 Z"/>
+    <!-- K letter -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M80,70 L80,130 L100,100 L80,70 Z M100,100 L80,130 L120,130 L100,100 Z"/>
+    <!-- Orbit ring -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="3"
+        android:pathData="M100,100m-35,0a35,35 0,1 1,70 0a35,35 0,1 1,-70 0"/>
+</vector>
