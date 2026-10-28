@@ -2,8 +2,14 @@ package com.mclauncher.android.data.repository
 
 import android.content.Context
 import com.mclauncher.android.data.model.Instance
+import java.text.SimpleDateFormat
 import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.util.*
+import java.util.zip.ZipEntry
+import java.util.zip.ZipInputStream
+import java.util.zip.ZipOutputStream
 
 /**
  * Repository for managing isolated game instances on the file system.
@@ -163,5 +169,102 @@ class InstanceRepository(private val context: Context) {
      */
     fun getInstanceDir(instanceId: String): File? {
         return File(instancesRoot, instanceId).takeIf { it.exists() }
+    }
+
+    /**
+     * Returns the backups root directory for a given instance.
+     */
+    fun getInstanceBackupsDir(instanceId: String): File {
+        val backupsDir = File(File(instancesRoot, instanceId), "backups")
+        backupsDir.mkdirs()
+        return backupsDir
+    }
+
+    /**
+     * Lists all backups for an instance, sorted newest first.
+     */
+    fun listBackups(instanceId: String): List<File> {
+        return getInstanceBackupsDir(instanceId).listFiles()
+            ?.filter { it.extension == "zip" }
+            ?.sortedByDescending { it.lastModified() }
+            .orEmpty()
+    }
+
+    /**
+     * Creates a ZIP backup of an instance directory.
+     */
+    fun backupInstance(instance: Instance): File? {
+        val instanceDir = File(instance.gameDir)
+        if (!instanceDir.exists()) return null
+
+        val backupsDir = getInstanceBackupsDir(instance.id)
+        val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val backupFile = File(backupsDir, "backup_$timestamp.zip")
+
+        try {
+            zipDirectory(instanceDir, backupFile)
+            return backupFile
+        } catch (e: Exception) {
+            return null
+        }
+    }
+
+    /**
+     * Restores an instance from a ZIP backup file.
+     */
+    fun restoreInstance(instance: Instance, backupFile: File): Boolean {
+        val instanceDir = File(instance.gameDir)
+        if (!backupFile.exists()) return false
+
+        try {
+            // Clear existing instance dir
+            if (instanceDir.exists()) {
+                deleteRecursive(instanceDir)
+            }
+            instanceDir.mkdirs()
+            unzipDirectory(backupFile, instanceDir)
+            return true
+        } catch (e: Exception) {
+            return false
+        }
+    }
+
+    /**
+     * Deletes a backup file.
+     */
+    fun deleteBackup(backupFile: File): Boolean {
+        return backupFile.delete()
+    }
+
+    private fun zipDirectory(sourceDir: File, zipFile: File) {
+        val files = sourceDir.walkTopDown().filter { it.isFile }.toList()
+        ZipOutputStream(FileOutputStream(zipFile)).use { zos ->
+            for (file in files) {
+                val entryName = sourceDir.relativeTo(file.parentFile).resolve(file.name).toString()
+                zos.putNextEntry(ZipEntry(entryName))
+                FileInputStream(file).use { fis ->
+                    fis.copyTo(zos)
+                }
+                zos.closeEntry()
+            }
+        }
+    }
+
+    private fun unzipDirectory(zipFile: File, destDir: File) {
+        ZipInputStream(FileInputStream(zipFile)).use { zis ->
+            var entry: ZipEntry? = zis.nextEntry
+            while (entry != null) {
+                val destFile = File(destDir, entry.name)
+                if (entry.isDirectory) {
+                    destFile.mkdirs()
+                } else {
+                    destFile.parentFile.mkdirs()
+                    FileOutputStream(destFile).use { fos ->
+                        zis.copyTo(fos)
+                    }
+                }
+                entry = zis.nextEntry
+            }
+        }
     }
 }
