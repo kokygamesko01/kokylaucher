@@ -32,6 +32,9 @@ jobs:
           rm cmdlinetools.zip
 
       - name: Install Android SDK packages
+        env:
+          ANDROID_HOME: $HOME/android-sdk
+          ANDROID_SDK_ROOT: $HOME/android-sdk
         run: |
           export ANDROID_SDK_ROOT=$HOME/android-sdk
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
@@ -40,7 +43,8 @@ jobs:
 
       - name: Build debug APK
         env:
-          ANDROID_SDK_ROOT: ${{ github.workspace }}/android-sdk
+          ANDROID_HOME: $HOME/android-sdk
+          ANDROID_SDK_ROOT: $HOME/android-sdk
         run: |
           export ANDROID_SDK_ROOT=$HOME/android-sdk
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
