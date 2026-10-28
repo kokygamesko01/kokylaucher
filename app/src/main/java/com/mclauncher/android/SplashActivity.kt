@@ -10,12 +10,15 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Theme provides windowBackground (@drawable/splash_background) for the splash image
 
         // Show splash for 2 seconds, then go to login
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
+            if (!isFinishing) {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }, 2000)
     }
 }
