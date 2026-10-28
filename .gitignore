@@ -1,0 +1,36 @@
+# Gradle
+.gradle/
+build/
+!src/full/release/outputs
+!src/full/debug/outputs
+!.gradle/
+
+# Android
+*.apk
+*.aab
+*.apks
+local.properties
+*.keystore
+*.jks
+
+# Kotlin
+*.klass
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+
+# Signing
+key.properties
+*.key

@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">MC Launcher</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_versions">Versions</string>
+    <string name="nav_instances">Instances</string>
+    <string name="nav_mods">Mods</string>
+    <string name="nav_settings">Settings</string>
+    <string name="create_instance">Create instance</string>
+    <string name="instance_name">Instance name</string>
+    <string name="select_version">Select version</string>
+    <string name="launch">Launch</string>
+    <string name="install">Install</string>
+    <string name="delete">Delete</string>
+    <string name="backups">Backups</string>
+    <string name="logs">Logs</string>
+    <string name="resource_packs">Resource packs</string>
+    <string name="mod_loader">Mod loader</string>
+    <string name="loader_none">None (vanilla)</string>
+    <string name="loader_fabric">Fabric</string>
+    <string name="loader_forge">Forge</string>
+    <string name="loader_quilt">Quilt</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="about_text">MC Launcher — a Minecraft Java Edition launcher manager for Android.\n\nDownloads versions, libraries, assets, mods and resource packs into isolated instances and assembles the Java launch command.\n\nImportant: Minecraft Java Edition native libraries (LWJGL/OpenAL) are built for desktop (Windows/Linux/macOS x86/x64), and Android uses ART rather than a standard JVM. Running the game on Android additionally requires a JVM port plus Android-native LWJGL (the approach used by the open-source PojavLauncher). This app manages instances and assembles the launch command; actually executing the game requires that JVM/LWJGL port, which is documented in README.md.</string>
+</resources>
