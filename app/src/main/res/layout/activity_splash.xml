@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF0A0A0A"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <!-- KokyOS Logo -->
+    <ImageView
+        android:id="@+id/splashLogo"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:src="@drawable/ic_koky_logo"
+        android:contentDescription="KokyOS logo" />
+
+    <!-- Powered by KokyOS text -->
+    <TextView
+        android:id="@+id/splashPoweredBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="POWERED BY KOKYOS"
+        android:textColor="#FFFFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.08" />
+
+    <!-- Loading message (not a fake progress bar) -->
+    <TextView
+        android:id="@+id/splashLoadingMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Initializing Kokylaucher…"
+        android:textColor="#FFB0B0B0"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+</LinearLayout>

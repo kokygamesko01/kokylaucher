@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Subtle scale pulse: logo gently grows and shrinks -->
+    <scale
+        android:fromXScale="0.90"
+        android:toXScale="1.10"
+        android:fromYScale="0.90"
+        android:toYScale="1.10"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:duration="3000"
+        android:repeatMode="reverse"
+        android:repeatCount="infinite"
+        android:interpolator="@android:anim/linear_interpolator"/>
+    <!-- Gentle alpha shimmer -->
+    <alpha
+        android:fromAlpha="0.85"
+        android:toAlpha="1.00"
+        android:duration="2000"
+        android:repeatMode="reverse"
+        android:repeatCount="infinite"
+        android:interpolator="@android:anim/linear_interpolator"/>
+</set>

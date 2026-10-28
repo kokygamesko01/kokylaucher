@@ -18,4 +18,14 @@
     <string name="choose_launcher">Zvolte typ spouštěče</string>
     <string name="play_not_available">Hraní není dostupné</string>
     <string name="play_explanation">Minecraft: Java Edition nelze na Androidu spustit nativně. Nativní knihovny hry (LWJGL, OpenAL) jsou sestaveny pro desktop (Windows/Linux/macOS x86/x64) a Android používá ART místo standardní JVM. Pro spuštění hry je nutná JVM port a Android-native LWJGL (např. PojavLauncher). Tato aplikace spravuje instance a sestavuje příkaz ke spuštění.</string>
+    <string name="splash_loading">Inicializace Kokylaucheru…</string>
+    <string name="play_launching">Spouštění Minecraftu…</string>
+    <string name="play_launch_failed">Spuštění se nezdařilo</string>
+    <string name="play_launch_error_detail">Nelze spustit Minecraft: Java Edition na tomto zařízení. Chybí Android-native běhové prostředí Java (JVM) a nativní knihovny LWJGL. Tato aplikace je správce launcheru: stahuje verze, spravuje instance a sestavuje příkaz ke spuštění. Reálně spuštění hry vyžaduje integraci běhového prostředí Java pro Android (např. Boardwalk/PojavLauncher, LGPL-3.0) a Android-native LWJGL.</string>
+    <string name="button_not_implemented">Tato funkce ještě není implementována.</string>
+    <string name="runtime_not_available">Běhové prostředí Java není k dispozici</string>
+    <string name="runtime_download">Stahování běhového prostředí Java…</string>
+    <string name="lwjgl_not_available">Android-native LWJGL není k dispozici</string>
+    <string name="lwjgl_download">Stahování Android-native LWJGL…</string>
+    <string name="lgpl_attribution">Tato aplikace používá komponenty pod licenci GNU LGPL-3.0 (PojavLauncher/Boardwalk). Zdrojové kódy jsou k dispozici na GitHubu.</string>
 </resources>

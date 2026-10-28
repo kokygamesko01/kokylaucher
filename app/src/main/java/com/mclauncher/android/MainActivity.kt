@@ -11,10 +11,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mclauncher.android.databinding.ActivityMainBinding
+import com.mclauncher.android.service.LaunchManager
+import com.mclauncher.android.ui.launch.LaunchActivity
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var launchManager: LaunchManager
     private var playerName: String = "Hráč"
     private var launcherType: String = "vanilla" // "vanilla" or "mod"
 
@@ -22,6 +25,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        launchManager = LaunchManager(this)
+
+        playerName = intent.getStringExtra("player_name") ?: "Hráč"
 
         // Load persisted nickname, fall back to intent extra, then default
         val prefs = getSharedPreferences("kokylaucher_prefs", MODE_PRIVATE)
@@ -33,7 +40,8 @@ class MainActivity : AppCompatActivity() {
         binding.tvAppTitle.text = playerName
 
         binding.btnHome.setOnClickListener {
-            // Home
+            // Home - refresh view
+            binding.tvAppTitle.text = playerName
         }
 
         // Launcher type choice
@@ -56,11 +64,11 @@ class MainActivity : AppCompatActivity() {
 
         // Menu items
         binding.btnCustomControls.setOnClickListener {
-            Toast.makeText(this, "Vlastní ovládací prvky - připraveno", Toast.LENGTH_SHORT).show()
+            showFeatureStatus("Vlastní ovládací prvky")
         }
 
         binding.btnRunJar.setOnClickListener {
-            Toast.makeText(this, "Spustit .JAR - připraveno", Toast.LENGTH_SHORT).show()
+            showFeatureStatus("Spustit .JAR")
         }
 
         binding.btnShareLog.setOnClickListener {
@@ -71,28 +79,102 @@ class MainActivity : AppCompatActivity() {
             openGameFolder()
         }
 
-        // Play button
+        // Play button - attempts genuine Minecraft launch
         binding.btnPlay.setOnClickListener {
-            showPlayDialog()
+            attemptLaunch()
         }
     }
 
+    private fun showFeatureStatus(featureName: String) {
+        AlertDialog.Builder(this)
+            .setTitle(featureName)
+            .setMessage("${getString(R.string.button_not_implemented)}\nTato funkce bude přidána v nadcházející aktualizaci.")
+            .setPositiveButton("Rozumím") { _, _ -> }
+            .show()
+    }
+
     private fun shareLog() {
-        Toast.makeText(this, "Sdílet záznam protokolu - připraveno", Toast.LENGTH_SHORT).show()
+        val log = launchManager.getLaunchLog()
+        if (log.isEmpty()) {
+            Toast.makeText(this, "Žádné protokoly k dispozici", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, "Kokylaucher Launch Log")
+            putExtra(Intent.EXTRA_TEXT, log)
+        }
+        startActivity(Intent.createChooser(intent, "Sdílet protokol"))
     }
 
     private fun openGameFolder() {
-        Toast.makeText(this, "Otevřít složku hry - připraveno", Toast.LENGTH_SHORT).show()
+        val instancesRoot = launchManagerInstanceRepository().getInstancesRoot()
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType(android.net.Uri.fromFile(instancesRoot), "*/*")
+        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+        try {
+            startActivity(intent)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Nelze otevřít složku her: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
     }
 
-    private fun showPlayDialog() {
+    private fun attemptLaunch() {
+        // Get the most recent instance
+        val instances = launchManagerInstanceRepository().listInstances()
+        if (instances.isEmpty()) {
+            AlertDialog.Builder(this)
+                .setTitle("Žádné instance")
+                .setMessage("Nejprve vytvořte instanci hry v sekci Instances.")
+                .setPositiveButton("Rozumím") { _, _ -> }
+                .show()
+            return
+        }
+
+        val instance = instances[0] // Use most recent instance
+
+        // Check if runtime is available
+        if (!launchManager.isJavaRuntimeAvailable()) {
+            showRuntimeMissingDialog()
+            return
+        }
+
+        if (!launchManager.isLwjglAvailable()) {
+            showLwjglMissingDialog()
+            return
+        }
+
+        // Launch via LaunchActivity
+        val intent = Intent(this, LaunchActivity::class.java).apply {
+            putExtra("instance_id", instance.id)
+            putExtra("version_id", instance.versionId)
+        }
+        startActivity(intent)
+    }
+
+    private fun showRuntimeMissingDialog() {
         AlertDialog.Builder(this)
-            .setTitle(getString(R.string.play_not_available))
-            .setMessage(getString(R.string.play_explanation))
-            .setPositiveButton("Rozumím") { _, _ ->
-                // Dismiss
-            }
-            .setCancelable(false)
+            .setTitle(getString(R.string.runtime_not_available))
+            .setMessage(getString(R.string.play_launch_error_detail))
+            .setPositiveButton("Rozumím") { _, _ -> }
             .show()
+    }
+
+    private fun showLwjglMissingDialog() {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.lwjgl_not_available))
+            .setMessage("Android-native LWJGL knihovny nejsou k dispozici.\n\n" +
+                "Minecraft používá LWJGL pro grafiku, zvuk a vstup. Tyto knihovny jsou sestaveny pro desktop (Windows/Linux/macOS x86/x64) a nelze je na Androidu ARM64 přímo načíst.\n\n" +
+                "Pro reálné spuštění je nutné Android-native LWJGL (sestavené pro ARM64) a běhové prostředí Java pro Android.")
+            .setPositiveButton("Rozumím") { _, _ -> }
+            .show()
+    }
+
+    private fun launchManagerInstanceRepository(): com.mclauncher.android.data.repository.InstanceRepository {
+        return com.mclauncher.android.data.repository.InstanceRepository(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }
