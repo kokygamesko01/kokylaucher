@@ -11,8 +11,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mclauncher.android.databinding.ActivityMainBinding
+import com.mclauncher.android.data.model.LaunchReadiness
 import com.mclauncher.android.service.LaunchManager
 import com.mclauncher.android.ui.launch.LaunchActivity
+import com.mclauncher.android.ui.launch.ModloaderSelectorActivity
+import com.mclauncher.android.ui.launch.VersionSelectorActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +23,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var launchManager: LaunchManager
     private var playerName: String = "Hráč"
     private var launcherType: String = "vanilla" // "vanilla" or "mod"
+
+    // Request codes for selector activities
+    private val REQUEST_VERSION_SELECTOR = 1001
+    private val REQUEST_MODLOADER_SELECTOR = 1002
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnHome.setOnClickListener {
             // Home - refresh view
             binding.tvAppTitle.text = playerName
+            updateSelectionDisplay()
         }
 
         // Launcher type choice
@@ -62,6 +70,31 @@ class MainActivity : AppCompatActivity() {
         // Default to vanilla
         binding.btnVanilla.setBackgroundResource(R.drawable.button_koky_selected)
 
+        // Vanilla Launcher - open version selector
+        binding.btnVanilla.setOnClickListener {
+            launcherType = "vanilla"
+            binding.btnVanilla.setBackgroundResource(R.drawable.button_koky_selected)
+            binding.btnMod.setBackgroundResource(R.drawable.button_koky)
+            val intent = Intent(this, VersionSelectorActivity::class.java)
+            startActivityForResult(intent, REQUEST_VERSION_SELECTOR)
+        }
+
+        // Mod Launcher - open modloader selector
+        binding.btnMod.setOnClickListener {
+            launcherType = "mod"
+            binding.btnMod.setBackgroundResource(R.drawable.button_koky_selected)
+            binding.btnVanilla.setBackgroundResource(R.drawable.button_koky)
+            val intent = Intent(this, ModloaderSelectorActivity::class.java)
+            selectedMcVersion = modloaderRepository.getSelectedVersionId()
+            selectedMcType = modloaderRepository.getSelectedVersionType()
+            val mcVersion = selectedMcVersion
+            if (mcVersion == null || mcVersion.isEmpty()) {
+                Toast.makeText(this, "Nejprve vyberte verzi Minecraftu", Toast.LENGTH_SHORT).show()
+            } else {
+                startActivityForResult(intent, REQUEST_MODLOADER_SELECTOR)
+            }
+        }
+
         // Menu items
         binding.btnCustomControls.setOnClickListener {
             showFeatureStatus("Vlastní ovládací prvky")
@@ -79,12 +112,61 @@ class MainActivity : AppCompatActivity() {
             openGameFolder()
         }
 
-        // Play button - attempts genuine Minecraft launch
+        // Play button - attempts genuine Minecraft launch using saved selections
         binding.btnPlay.setOnClickListener {
             attemptLaunch()
         }
+
+        // Update selection display
+        updateSelectionDisplay()
     }
 
+    private var selectedMcVersion: String? = null
+    private var selectedMcType: String? = null
+
+    private val modloaderRepository: com.mclauncher.android.data.repository.ModloaderRepository
+        get() = com.mclauncher.android.data.repository.ModloaderRepository(this)
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_VERSION_SELECTOR && resultCode == RESULT_OK) {
+            // Version selected - UI already updated in VersionSelectorActivity
+            updateSelectionDisplay()
+        } else if (requestCode == REQUEST_MODLOADER_SELECTOR && resultCode == RESULT_OK) {
+            // Modloader selected - data returned
+            val modloader = data?.getStringExtra("selected_modloader") ?: ""
+            val loaderVersion = data?.getStringExtra("selected_loader_version") ?: ""
+            val mcVersion = data?.getStringExtra("selected_loader_mcversion") ?: ""
+            selectedMcVersion = mcVersion
+            selectedMcType = modloaderRepository.getSelectedVersionType()
+            updateSelectionDisplay()
+            Toast.makeText(this, "Uloženo: $modloader $loaderVersion", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun updateSelectionDisplay() {
+        val versionId = modloaderRepository.getSelectedVersionId()
+        val versionType = modloaderRepository.getSelectedVersionType()
+        val modloader = modloaderRepository.getSelectedModloader()
+        val loaderVersion = modloaderRepository.getSelectedLoaderVersion()
+
+        // Update Vanilla button text
+        if (versionId != null) {
+            binding.btnVanilla.text = "Vanilla • $versionId"
+        } else {
+            binding.btnVanilla.text = "Vanilla Launcher"
+        }
+
+        // Update Mod button text
+        if (modloader != null && loaderVersion != null) {
+            binding.btnMod.text = "$modloader • $loaderVersion"
+        } else {
+            binding.btnMod.text = "Mod Launcher"
+        }
+    }
+
+    // Menu items
     private fun showFeatureStatus(featureName: String) {
         AlertDialog.Builder(this)
             .setTitle(featureName)
@@ -120,34 +202,46 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun attemptLaunch() {
-        // Get the most recent instance
-        val instances = launchManagerInstanceRepository().listInstances()
-        if (instances.isEmpty()) {
+        // Get saved selections
+        val versionId = modloaderRepository.getSelectedVersionId()
+        val modloader = modloaderRepository.getSelectedModloader()
+        val loaderVersion = modloaderRepository.getSelectedLoaderVersion()
+
+        // Validate selections
+        if (versionId == null || versionId.isEmpty()) {
             AlertDialog.Builder(this)
-                .setTitle("Žádné instance")
-                .setMessage("Nejprve vytvořte instanci hry v sekci Instances.")
+                .setTitle("Není vybrána verze")
+                .setMessage("Nejprve vyberte verzi Minecraftu v sekci Vanilla Launcher nebo Mod Launcher.")
                 .setPositiveButton("Rozumím") { _, _ -> }
                 .show()
             return
         }
 
-        val instance = instances[0] // Use most recent instance
-
-        // Check if runtime is available
+        // Check Java runtime
         if (!launchManager.isJavaRuntimeAvailable()) {
             showRuntimeMissingDialog()
             return
         }
 
+        // Check LWJGL
         if (!launchManager.isLwjglAvailable()) {
             showLwjglMissingDialog()
             return
         }
 
+        // Validate game files exist for the selected version
+        val readiness = launchManager.checkLaunchReadiness(versionId, modloader, loaderVersion)
+        if (!readiness.isReady) {
+            showMissingFilesDialog(readiness)
+            return
+        }
+
         // Launch via LaunchActivity
         val intent = Intent(this, LaunchActivity::class.java).apply {
-            putExtra("instance_id", instance.id)
-            putExtra("version_id", instance.versionId)
+            putExtra("instance_id", versionId)
+            putExtra("version_id", versionId)
+            putExtra("modloader", modloader)
+            putExtra("loader_version", loaderVersion)
         }
         startActivity(intent)
     }
@@ -166,6 +260,17 @@ class MainActivity : AppCompatActivity() {
             .setMessage("Android-native LWJGL knihovny nejsou k dispozici.\n\n" +
                 "Minecraft používá LWJGL pro grafiku, zvuk a vstup. Tyto knihovny jsou sestaveny pro desktop (Windows/Linux/macOS x86/x64) a nelze je na Androidu ARM64 přímo načíst.\n\n" +
                 "Pro reálné spuštění je nutné Android-native LWJGL (sestavené pro ARM64) a běhové prostředí Java pro Android.")
+            .setPositiveButton("Rozumím") { _, _ -> }
+            .show()
+    }
+
+    private fun showMissingFilesDialog(readiness: LaunchReadiness) {
+        val missing = readiness.missingComponents.joinToString("\n") { component: String ->
+            "• $component"
+        }
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.missing_files_title))
+            .setMessage(getString(R.string.missing_files_message).replace("%s", missing))
             .setPositiveButton("Rozumím") { _, _ -> }
             .show()
     }

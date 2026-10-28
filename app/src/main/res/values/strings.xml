@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Kokylaucher</string>
     <string name="add_account">Přidat účet</string>
@@ -28,4 +27,36 @@
     <string name="lwjgl_not_available">Android-native LWJGL není k dispozici</string>
     <string name="lwjgl_download">Stahování Android-native LWJGL…</string>
     <string name="lgpl_attribution">Tato aplikace používá komponenty pod licenci GNU LGPL-3.0 (PojavLauncher/Boardwalk). Zdrojové kódy jsou k dispozici na GitHubu.</string>
+    <!-- Version selector -->
+    <string name="version_selector_title">Vybrat verzi Minecraftu</string>
+    <string name="search_hint">Hledat verze…</string>
+    <string name="filter_hint">release • snapshot • starší</string>
+    <string name="versions_loading">Načítání verzí z Mojangu…</string>
+    <string name="versions_error_title">Nelze načíst verze</string>
+    <string name="versions_retry">Zkusit znovu</string>
+    <string name="versions_empty_title">Žádné verze nenalezeny</string>
+    <string name="versions_empty_message">Zkuste upravit hledání nebo filtr.</string>
+    <string name="version_select">Vybrat</string>
+    <string name="version_installed">Nainstalováno</string>
+    <string name="version_not_installed">Není nainstalováno</string>
+    <string name="version_selected_toast">Vybrána verze %s</string>
+    <!-- Modloader selector -->
+    <string name="modloader_selector_title">Vybrat modloader</string>
+    <string name="modloader_selected_mc">Vybrána verze Minecraftu</string>
+    <string name="modloader_compat_hint">Vyberte kompatibilní modloader pro tuto verzi.</string>
+    <string name="modloader_no_mc">Nejprve vyberte verzi Minecraftu.</string>
+    <string name="modloader_no_compat">Žádná kompatibilní verze</string>
+    <string name="modloader_version_label">Verze modloaderu</string>
+    <string name="modloader_stable">stabilní</string>
+    <string name="modloader_no_compatible">Žádná kompatibilní verze pro %s</string>
+    <string name="modloader_select">Vybrat</string>
+    <string name="modloader_cancel">Zrušit</string>
+    <string name="modloader_select_toast">Vybrán %s %s</string>
+    <string name="modloader_select_both">Vyberte modloader a jeho verzi</string>
+    <!-- Missing files -->
+    <string name="missing_files_title">Chybějící soubory hry</string>
+    <string name="missing_files_message">Pro spuštění verze jsou nutné následující soubory:\n\n%s\n\nTyto soubory je nutné nejprve stáhnout a nainstalovat.</string>
+    <string name="no_version_selected">Není vybrána verze</string>
+    <string name="no_version_message">Nejprve vyberte verzi Minecraftu v sekci Vanilla Launcher nebo Mod Launcher.</string>
+    <string name="no_modloader_selected">Vyberte modloader a jeho verzi</string>
 </resources>

@@ -47,6 +47,20 @@
             android:theme="@style/Theme.Kokylaucher"
             android:windowSoftInputMode="adjustResize" />
 
+        <!-- Version Selector -->
+        <activity
+            android:name=".ui.launch.VersionSelectorActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Kokylaucher"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Modloader Selector -->
+        <activity
+            android:name=".ui.launch.ModloaderSelectorActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Kokylaucher"
+            android:windowSoftInputMode="adjustResize" />
+
         <!-- Launch / Log Viewer -->
         <activity
             android:name=".ui.launch.LaunchActivity"

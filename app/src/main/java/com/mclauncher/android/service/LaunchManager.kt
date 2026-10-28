@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import com.mclauncher.android.data.model.Instance
+import com.mclauncher.android.data.model.LaunchReadiness
 import com.mclauncher.android.data.model.Version
 import com.mclauncher.android.data.repository.InstanceRepository
 import com.mclauncher.android.data.repository.VersionRepository
@@ -80,6 +81,61 @@ class LaunchManager(private val context: Context) {
      */
     fun isLwjglAvailable(): Boolean {
         return lwjglDir.exists() && lwjglDir.listFiles()?.any { it.extension == "so" } == true
+    }
+
+    /**
+     * Checks launch readiness for a given version/modloader combination.
+     * Returns which components are missing.
+     */
+    fun checkLaunchReadiness(
+        versionId: String,
+        modloader: String?,
+        loaderVersion: String?
+    ): LaunchReadiness {
+        val missing = mutableListOf<String>()
+
+        val javaPresent = isJavaRuntimeAvailable()
+        if (!javaPresent) {
+            missing.add("Java runtime (JVM pro Android) - $javaHome")
+        }
+
+        val lwjglPresent = isLwjglAvailable()
+        if (!lwjglPresent) {
+            missing.add("Android-native LWJGL knihovny - $lwjglDir")
+        }
+
+        // Check game files
+        val instancesRoot = instanceRepository.getInstancesRoot()
+        val gameJar = File(instancesRoot, "versions/$versionId.jar")
+        val gameFilesPresent = gameJar.exists()
+        if (!gameFilesPresent) {
+            missing.add("Minecraft herní soubory (verze $versionId) - $gameJar")
+        }
+
+        // Check assets
+        val assetsDir = File(instancesRoot, "assets")
+        val assetsPresent = assetsDir.exists() && assetsDir.listFiles()?.isNotEmpty() == true
+        if (!assetsPresent) {
+            missing.add("Herní assety - $assetsDir")
+        }
+
+        // Check modloader if modded
+        if (modloader != null && modloader != "none") {
+            val modloaderDir = File(instancesRoot, "modloaders/$modloader")
+            val modloaderPresent = modloaderDir.exists() && modloaderDir.listFiles()?.isNotEmpty() == true
+            if (!modloaderPresent) {
+                missing.add("Modloader $modloader (verze $loaderVersion) - $modloaderDir")
+            }
+        }
+
+        return LaunchReadiness(
+            isReady = missing.isEmpty(),
+            missingComponents = missing,
+            javaRuntimePresent = javaPresent,
+            lwjglPresent = lwjglPresent,
+            gameFilesPresent = gameFilesPresent,
+            assetsPresent = assetsPresent
+        )
     }
 
     /**
