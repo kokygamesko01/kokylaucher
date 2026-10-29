@@ -1,62 +1,128 @@
 <resources>
+    <!-- App -->
     <string name="app_name">Kokylaucher</string>
-    <string name="add_account">Přidat účet</string>
+    <string name="powered_by">POWERED BY KOKYOS</string>
+
+    <!-- Splash -->
+    <string name="splash_loading">Initializing Kokylaucher…</string>
+
+    <!-- Login -->
+    <string name="add_account">Add account</string>
     <string name="microsoft_account">MICROSOFT ACCOUNT</string>
     <string name="elyby_account">ELY.BY ACCOUNT</string>
     <string name="local_account">LOCAL ACCOUNT</string>
-    <string name="username_hint">Uživatelské jméno</string>
-    <string name="login_button">PŘIHLÁSIT SE</string>
-    <string name="vanilla_launcher">Vanilla Launcher</string>
+    <string name="username_hint">Username</string>
+    <string name="login_button">SIGN IN</string>
+
+    <!-- Main Menu -->
+    <string name="choose_launcher">Choose launcher type</string>
+    <string name="vanilla_launcher">Vanilla / OptiFine Launcher</string>
     <string name="mod_launcher">Mod Launcher</string>
-    <string name="play">HRÁT</string>
-    <string name="custom_controls">VLASTNÍ OVLÁDACÍ PRVKY</string>
-    <string name="run_jar">SPUSTIT .JAR</string>
-    <string name="share_log">SDÍLET ZÁZNAM PROTOKOLU</string>
-    <string name="open_game_folder">OTEVŘÍT SLOŽKU HRY</string>
-    <string name="powered_by">POWERED BY KOKYOS</string>
-    <string name="choose_launcher">Zvolte typ spouštěče</string>
-    <string name="play_not_available">Hraní není dostupné</string>
-    <string name="play_explanation">Minecraft: Java Edition nelze na Androidu spustit nativně. Nativní knihovny hry (LWJGL, OpenAL) jsou sestaveny pro desktop (Windows/Linux/macOS x86/x64) a Android používá ART místo standardní JVM. Pro spuštění hry je nutná JVM port a Android-native LWJGL (např. PojavLauncher). Tato aplikace spravuje instance a sestavuje příkaz ke spuštění.</string>
-    <string name="splash_loading">Inicializace Kokylaucheru…</string>
-    <string name="play_launching">Spouštění Minecraftu…</string>
-    <string name="play_launch_failed">Spuštění se nezdařilo</string>
-    <string name="play_launch_error_detail">Nelze spustit Minecraft: Java Edition na tomto zařízení. Chybí Android-native běhové prostředí Java (JVM) a nativní knihovny LWJGL. Tato aplikace je správce launcheru: stahuje verze, spravuje instance a sestavuje příkaz ke spuštění. Reálně spuštění hry vyžaduje integraci běhového prostředí Java pro Android (např. Boardwalk/PojavLauncher, LGPL-3.0) a Android-native LWJGL.</string>
-    <string name="button_not_implemented">Tato funkce ještě není implementována.</string>
-    <string name="runtime_not_available">Běhové prostředí Java není k dispozici</string>
-    <string name="runtime_download">Stahování běhového prostředí Java…</string>
-    <string name="lwjgl_not_available">Android-native LWJGL není k dispozici</string>
-    <string name="lwjgl_download">Stahování Android-native LWJGL…</string>
-    <string name="lgpl_attribution">Tato aplikace používá komponenty pod licenci GNU LGPL-3.0 (PojavLauncher/Boardwalk). Zdrojové kódy jsou k dispozici na GitHubu.</string>
-    <!-- Version selector -->
-    <string name="version_selector_title">Vybrat verzi Minecraftu</string>
-    <string name="search_hint">Hledat verze…</string>
-    <string name="filter_hint">release • snapshot • starší</string>
-    <string name="versions_loading">Načítání verzí z Mojangu…</string>
-    <string name="versions_error_title">Nelze načíst verze</string>
-    <string name="versions_retry">Zkusit znovu</string>
-    <string name="versions_empty_title">Žádné verze nenalezeny</string>
-    <string name="versions_empty_message">Zkuste upravit hledání nebo filtr.</string>
-    <string name="version_select">Vybrat</string>
-    <string name="version_installed">Nainstalováno</string>
-    <string name="version_not_installed">Není nainstalováno</string>
-    <string name="version_selected_toast">Vybrána verze %s</string>
-    <!-- Modloader selector -->
-    <string name="modloader_selector_title">Vybrat modloader</string>
-    <string name="modloader_selected_mc">Vybrána verze Minecraftu</string>
-    <string name="modloader_compat_hint">Vyberte kompatibilní modloader pro tuto verzi.</string>
-    <string name="modloader_no_mc">Nejprve vyberte verzi Minecraftu.</string>
-    <string name="modloader_no_compat">Žádná kompatibilní verze</string>
-    <string name="modloader_version_label">Verze modloaderu</string>
-    <string name="modloader_stable">stabilní</string>
-    <string name="modloader_no_compatible">Žádná kompatibilní verze pro %s</string>
-    <string name="modloader_select">Vybrat</string>
-    <string name="modloader_cancel">Zrušit</string>
-    <string name="modloader_select_toast">Vybrán %s %s</string>
-    <string name="modloader_select_both">Vyberte modloader a jeho verzi</string>
-    <!-- Missing files -->
-    <string name="missing_files_title">Chybějící soubory hry</string>
-    <string name="missing_files_message">Pro spuštění verze jsou nutné následující soubory:\n\n%s\n\nTyto soubory je nutné nejprve stáhnout a nainstalovat.</string>
-    <string name="no_version_selected">Není vybrána verze</string>
-    <string name="no_version_message">Nejprve vyberte verzi Minecraftu v sekci Vanilla Launcher nebo Mod Launcher.</string>
-    <string name="no_modloader_selected">Vyberte modloader a jeho verzi</string>
+    <string name="play">PLAY</string>
+    <string name="custom_controls">Custom controls</string>
+    <string name="run_jar">Run .JAR</string>
+    <string name="share_log">Share log</string>
+    <string name="open_game_folder">Open game folder</string>
+    <string name="settings">Settings</string>
+
+    <!-- Version Selector -->
+    <string name="version_selector_title">Select Minecraft version</string>
+    <string name="search_hint">Search versions…</string>
+    <string name="filter_hint">release · snapshot · old versions</string>
+    <string name="versions_loading">Loading versions from Mojang…</string>
+    <string name="versions_error_title">Unable to load versions</string>
+    <string name="versions_retry">Try again</string>
+    <string name="versions_empty_title">No versions found</string>
+    <string name="versions_empty_message">Try adjusting your search or filter.</string>
+    <string name="version_select">Select</string>
+    <string name="version_installed">Installed</string>
+    <string name="version_not_installed">Not installed</string>
+    <string name="version_selected_toast">Version %s selected</string>
+    <string name="vanilla_label">Vanilla</string>
+    <string name="optifine_label">OptiFine</string>
+
+    <!-- Modloader Selector -->
+    <string name="modloader_selector_title">Select modloader</string>
+    <string name="modloader_selected_mc">Minecraft version selected</string>
+    <string name="modloader_compat_hint">Select a compatible modloader for this version.</string>
+    <string name="modloader_no_mc">Please select a Minecraft version first.</string>
+    <string name="modloader_no_compat">No compatible version</string>
+    <string name="modloader_version_label">Loader version</string>
+    <string name="modloader_stable">stable</string>
+    <string name="modloader_no_compatible">No compatible version for %s</string>
+    <string name="modloader_select">Select</string>
+    <string name="modloader_cancel">Cancel</string>
+    <string name="modloader_select_toast">Selected %s %s</string>
+    <string name="modloader_select_both">Select a modloader and its version</string>
+
+    <!-- Mod Launcher Options -->
+    <string name="modloader_fabric">Fabric</string>
+    <string name="modloader_fabric_desc">Lightweight, modular modloader</string>
+    <string name="modloader_quilt">Quilt</string>
+    <string name="modloader_quilt_desc">Community-driven modloader fork of Fabric</string>
+    <string name="modloader_legacy_fabric">Legacy Fabric</string>
+    <string name="modloader_legacy_fabric_desc">Fabric for older Minecraft versions</string>
+    <string name="modloader_forge">Forge</string>
+    <string name="modloader_forge_desc">Classic Minecraft modloader with extensive mod support</string>
+    <string name="modloader_neoforge">NeoForge</string>
+    <string name="modloader_neoforge_desc">Community-driven fork of Forge</string>
+    <string name="modloader_modpacks">Modpacks</string>
+    <string name="modloader_modpacks_desc">Curated modpack installations</string>
+    <string name="modloader_modpacks_not_available">Modpack installation workflow not yet available</string>
+
+    <!-- OptiFine -->
+    <string name="optifine_title">OptiFine Versions</string>
+    <string name="optifine_compat_hint">Select an OptiFine version compatible with Minecraft %s</string>
+    <string name="optifine_no_versions">No OptiFine versions available for Minecraft %s</string>
+    <string name="optifine_download_notice">OptiFine downloads are subject to OptiFine distribution terms.</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_language_summary">Change the application language</string>
+    <string name="settings_version">Application version</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_dark">Dark (KokyOS)</string>
+    <string name="settings_runtime">Java Runtime</string>
+    <string name="settings_runtime_status">Check runtime availability</string>
+    <string name="settings_open_game_folder">Open game folder</string>
+    <string name="settings_share_log">Share launch log</string>
+    <string name="settings_about">About Kokylaucher</string>
+    <string name="settings_licenses">Third-party licenses</string>
+
+    <!-- About -->
+    <string name="about_title">About Kokylaucher</string>
+    <string name="about_description">Kokylaucher — a Minecraft: Java Edition launcher manager for Android.\n\nDownloads versions, libraries, assets, mods and resource packs into isolated instances and assembles the Java launch command.\n\nImportant: Minecraft: Java Edition native libraries (LWJGL/OpenAL) are built for desktop (Windows/Linux/macOS x86/x64), and Android uses ART rather than a standard JVM. Running the game on Android additionally requires a JVM port plus Android-native LWJGL (the approach used by the open-source PojavLauncher). This app manages instances and assembles the launch command; actually executing the game requires that JVM/LWJGL port, which is documented in README.md.</string>
+    <string name="about_version">Version: %s</string>
+    <string name="about_package">Package: com.mclauncher.android</string>
+
+    <!-- Missing files / runtime -->
+    <string name="runtime_not_available">Java Runtime not available</string>
+    <string name="runtime_download">Downloading Java Runtime…</string>
+    <string name="lwjgl_not_available">Android-native LWJGL not available</string>
+    <string name="lwjgl_download">Downloading Android-native LWJGL…</string>
+    <string name="missing_files_title">Missing game files</string>
+    <string name="missing_files_message">The following files are required to launch:\n\n%s\n\nThese files must be downloaded and installed first.</string>
+    <string name="no_version_selected">No version selected</string>
+    <string name="no_version_message">Please select a Minecraft version in the Vanilla Launcher or Mod Launcher section.</string>
+    <string name="no_modloader_selected">Select a modloader and its version</string>
+
+    <!-- Play / Launch -->
+    <string name="play_not_available">Play not available</string>
+    <string name="play_launching">Launching Minecraft…</string>
+    <string name="play_launch_failed">Launch failed</string>
+    <string name="play_launch_error_detail">Cannot launch Minecraft: Java Edition on this device. Missing Android-native Java runtime (JVM) and LWJGL native libraries. This app is a launcher manager: it downloads versions, manages instances, and assembles the launch command. Actually running the game requires a JVM port for Android (e.g., Boardwalk/PojavLauncher) and Android-native LWJGL.</string>
+    <string name="button_not_implemented">This feature is not yet implemented.</string>
+    <string name="feature_coming_soon">This feature will be added in a future update.</string>
+
+    <!-- Errors -->
+    <string name="error_network">Network error</string>
+    <string name="error_parse">Failed to parse data</string>
+    <string name="error_checksum">Checksum mismatch</string>
+    <string name="error_storage">Insufficient storage</string>
+
+    <!-- About/License -->
+    <string name="lgpl_attribution">This application references components under GNU LGPL-3.0 (PojavLauncher/Boardwalk). Source code is available on GitHub.</string>
+    <string name="licenses_title">Third-party Licenses</string>
+    <string name="licenses_content">Kokylaucher uses the following third-party components:\n\n- AndroidX Core, AppCompat, Material, CardView (Apache 2.0)\n- OkHttp (Apache 2.0)\n- Gson (Apache 2.0)\n- Kotlin Coroutines (Apache 2.0)\n\nPojavLauncher/Boardwalk (LGPL-3.0) is referenced for architectural guidance only. No LGPL/GPL code is copied.\n\nMinecraft: Java Edition is a trademark of Mojang Studios. Kokylaucher is not affiliated with Mojang or Microsoft.</string>
 </resources>

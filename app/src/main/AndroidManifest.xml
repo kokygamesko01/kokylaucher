@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mclauncher.android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -47,6 +46,20 @@
             android:theme="@style/Theme.Kokylaucher"
             android:windowSoftInputMode="adjustResize" />
 
+        <!-- Vanilla / OptiFine Selector -->
+        <activity
+            android:name=".ui.launcher.VanillaOptifineSelectorActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Kokylaucher"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Mod Launcher Selector -->
+        <activity
+            android:name=".ui.launcher.ModLauncherSelectorActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Kokylaucher"
+            android:windowSoftInputMode="adjustResize" />
+
         <!-- Version Selector -->
         <activity
             android:name=".ui.launch.VersionSelectorActivity"
@@ -56,7 +69,7 @@
 
         <!-- Modloader Selector -->
         <activity
-            android:name=".ui.launch.ModloaderSelectorActivity"
+            android:name=".ui.launch.ModlauncherSelectorActivity"
             android:exported="false"
             android:theme="@style/Theme.Kokylaucher"
             android:windowSoftInputMode="adjustResize" />
@@ -64,6 +77,20 @@
         <!-- Launch / Log Viewer -->
         <activity
             android:name=".ui.launch.LaunchActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Kokylaucher"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Settings -->
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Kokylaucher"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Language Settings -->
+        <activity
+            android:name=".ui.settings.LanguageSettingsActivity"
             android:exported="false"
             android:theme="@style/Theme.Kokylaucher"
             android:windowSoftInputMode="adjustResize" />
